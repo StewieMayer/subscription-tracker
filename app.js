@@ -1,15 +1,21 @@
-
-import express from "express"
+import express from "express";
 import { PORT } from "./config/env.js";
+import authRouter from "./routes/auth.routes.js";
+import subscriptionRouter from "./routes/subscription.routes.js";
+import userRouter from "./routes/user.routes.js";
 
 const app = express();
 
-app.get('/',(req, res)=>{
-    res.send('Welcome')
-})
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/subscriptions", subscriptionRouter);
 
-app.listen(PORT,()=>{
-    console.log(`Listening on ${PORT}`)
-})
+app.get("/", (req, res) => {
+  res.send("Welcome");
+});
+
+app.listen(PORT, () => {
+  console.log(`Listening on ${PORT}`);
+});
 
 export default app;
