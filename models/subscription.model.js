@@ -75,6 +75,7 @@ const subscriptionSchema = mongoose.Schema(
 );
 
 subscriptionSchema.pre("save", function (next) {
+  
   if (!this.renewalDate) {
     const renewalPeriods = {
       daily: 1,
@@ -85,7 +86,7 @@ subscriptionSchema.pre("save", function (next) {
 
     this.renewalDate = new Date(this.startDate);
     this.renewalDate.setDate(
-      this.renewalDate.getDate + renewalPeriods[this.frecuency]
+      this.renewalDate.getDate() + renewalPeriods[this.frecuency]
     );
   }
   if (this.renewalDate < new Date()) {
